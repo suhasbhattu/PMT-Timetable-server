@@ -1,6 +1,7 @@
 import {
   createStop,
   filterStopById,
+  listRouteStops,
   listStops,
 } from "../../services/stops/stop.js";
 
@@ -25,4 +26,12 @@ const postStop = async (httpRequest) => {
   return stop;
 };
 
-export { getStops, getStopById, postStop };
+const getRouteStops = async (httpRequest) => {
+  const stops = await listRouteStops(httpRequest);
+  return {
+    count: stops.length,
+    items: stops,
+  };
+};
+
+export { getStops, getStopById, postStop, getRouteStops };

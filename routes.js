@@ -1,4 +1,10 @@
-import { getStopById, getStops, postStop } from "./controller/stops/stop.js";
+import {
+  getRouteById,
+  getRoutes,
+  getRoutesForStops,
+  postRoute,
+} from "./controller/routes/route.js";
+import { getRouteStops, getStopById, getStops, postStop } from "./controller/stops/stop.js";
 
 const createGetController = (fn) => {
   return (req, res) => {
@@ -36,9 +42,14 @@ const createPostController = (fn) => {
 };
 
 const routes = (app) => {
-  app.get("/stops", createGetController(getStops));
-  app.get("/stops/:id", createGetController(getStopById));
-  app.post("/stops", createPostController(postStop));
+  app.get("/api/stops", createGetController(getStops));
+  app.get("/api/stops/:id", createGetController(getStopById));
+  app.post("/api/stops", createPostController(postStop));
+  app.get("/api/routes", createGetController(getRoutes));
+  app.get("/api/routes/:id", createGetController(getRouteById));
+  app.post("/api/routes", createPostController(postRoute));
+  app.post("/api/buses", createPostController(getRoutesForStops));
+  app.get("/api/routes/:id/stops", createGetController(getRouteStops));
 };
 
 export default routes;
